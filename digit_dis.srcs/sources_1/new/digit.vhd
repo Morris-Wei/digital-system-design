@@ -33,16 +33,16 @@ use IEEE.STD_LOGIC_1164.ALL;
 
 entity digit is
   Port ( 
-            input:in std_logic_vector(3 downto 0);
-            input_count:in std_logic_vector(1 downto 0);
-            digit_num:out std_logic_vector(6 downto 0);
-            digit_sel:out std_logic_vector(7 downto 0)
+            input:in std_logic_vector(3 downto 0);--输入一位密码的二进制表示形式
+            input_count:in std_logic_vector(1 downto 0);--正输入的哪一位（二进制）
+            digit_num:out std_logic_vector(6 downto 0);--输出7段数码管的显示码
+            digit_sel:out std_logic_vector(7 downto 0)--输出选中哪一位
         );
 end digit;
 
 architecture Behavioral of digit is
 
--------------------------������----------------------------
+-------------------------������----------------------------
 constant disp_0:std_logic_vector(6 downto 0):="0000001";
 constant disp_1:std_logic_vector(6 downto 0):="1001111";
 constant disp_2:std_logic_vector(6 downto 0):="0010010";
@@ -76,7 +76,7 @@ begin
     process(input_count)
     begin
         case input_count is
-            when "00"=>digit_sel<="11111110";--������λ�ö�Ӧʱ���߶Ըߣ��ͶԵ�
+            when "00"=>digit_sel<="11111110";--������λ�ö�Ӧʱ���߶Ըߣ��ͶԵ�
             when "01"=>digit_sel<="11111101";
             when "10"=>digit_sel<="11111011";
             when "11"=>digit_sel<="11110111";
