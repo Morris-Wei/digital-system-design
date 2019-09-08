@@ -98,22 +98,16 @@ signal delete_en:std_logic:='0';
 
 --signal counter_vec:std_logic_vector(2 downto 0):="000";
 ----------------------------------------------密码变量保存--------------------------------------------------------
-signal input_code_0:std_logic_vector(3 downto 0):="0000";--输入密码第一位
-signal input_code_1:std_logic_vector(3 downto 0):="0000";
-signal input_code_2:std_logic_vector(3 downto 0):="0000";
-signal input_code_3:std_logic_vector(3 downto 0):="0000";
-signal true_code_0: std_logic_vector(3 downto 0):="0011";--正确密码
-signal true_code_1: std_logic_vector(3 downto 0):="1000";
-signal true_code_2: std_logic_vector(3 downto 0):="0100";
-signal true_code_3: std_logic_vector(3 downto 0):="0110";
+signal input_code_0:std_logic_vector(3 downto 0):="1111";--输入密码第一位
+signal input_code_1:std_logic_vector(3 downto 0):="1111";
+signal input_code_2:std_logic_vector(3 downto 0):="1111";
+signal input_code_3:std_logic_vector(3 downto 0):="1111";
+signal true_code_0: std_logic_vector(3 downto 0):="0000";--正确密码
+signal true_code_1: std_logic_vector(3 downto 0):="0000";
+signal true_code_2: std_logic_vector(3 downto 0):="0000";
+signal true_code_3: std_logic_vector(3 downto 0):="0000";
 
-             
 signal input_count:std_logic_vector(1 downto 0):="00";  
-
-
-
-
-
 
 begin
 process(clk)--状态机状态转换，整个系统的心脏
@@ -374,12 +368,179 @@ begin
         end case;                                                           
         end if;                                                             
     end if;
-    if(state=unlock_state)then--为保证安全，输入正确后密码重置
+    
+-------------------------------------------------------------------------------------------------------------    
+    
+    if(state=reset_state)then                                                                                                                  
+    if(modify='1')then                                                  
+        case input is                                                   
+            when "0000"=>digit_num<=disp_0;                             
+                          case input_count is                           
+                              when "00"=>true_code_0<="0000";          
+                              when "01"=>true_code_1<="0000";          
+                              when "10"=>true_code_2<="0000";          
+                              when "11"=>true_code_3<="0000";          
+                              when others=>null;                        
+                          end case;                                     
+            when "0001"=>digit_num<=disp_1;                             
+                          case input_count is                           
+                          when "00"=>true_code_0<="0001";              
+                          when "01"=>true_code_1<="0001";              
+                          when "10"=>true_code_2<="0001";              
+                          when "11"=>true_code_3<="0001";              
+                          when others=>null;                            
+                          end case;                                     
+            when "0010"=>digit_num<=disp_2;                             
+                          case input_count is                           
+                          when "00"=>true_code_0<="0010";              
+                          when "01"=>true_code_1<="0010";              
+                          when "10"=>true_code_2<="0010";              
+                          when "11"=>true_code_3<="0010";              
+                          when others=>null;                            
+                          end case;                                     
+                                                                        
+            when "0011"=>digit_num<=disp_3;                             
+                          case input_count is                           
+                           when "00"=>true_code_0<="0011";             
+                           when "01"=>true_code_1<="0011";             
+                           when "10"=>true_code_2<="0011";             
+                           when "11"=>true_code_3<="0011";             
+                           when others=>null;                           
+                           end case;                                    
+                                                                        
+            when "0100"=>digit_num<=disp_4;                             
+                        case input_count is                             
+                        when "00"=>true_code_0<="0100";                
+                        when "01"=>true_code_1<="0100";                
+                        when "10"=>true_code_2<="0100";                
+                        when "11"=>true_code_3<="0100";                
+                        when others=>null;                              
+                        end case;                                       
+                                                                        
+            when "0101"=>digit_num<=disp_5;                             
+                                                                        
+                          case input_count is                           
+                        when "00"=>true_code_0<="0101";                
+                        when "01"=>true_code_1<="0101";                
+                        when "10"=>true_code_2<="0101";                
+                        when "11"=>true_code_3<="0101";                
+                        when others=>null;                              
+                        end case;                                       
+                                                                        
+            when "0110"=>digit_num<=disp_6;                             
+                                                                        
+                          case input_count is                           
+                            when "00"=>true_code_0<="0110";            
+                            when "01"=>true_code_1<="0110";            
+                            when "10"=>true_code_2<="0110";            
+                            when "11"=>true_code_3<="0110";            
+                            when others=>null;                          
+                            end case;                                   
+                                                                        
+            when "0111"=>digit_num<=disp_7;                             
+                                                                        
+                          case input_count is                           
+                        when "00"=>true_code_0<="0111";                
+                        when "01"=>true_code_1<="0111";                
+                        when "10"=>true_code_2<="0111";                
+                        when "11"=>true_code_3<="0111";                
+                        when others=>null;                              
+                        end case;                                       
+                                                                        
+            when "1000"=>digit_num<=disp_8;                             
+                                                                        
+                          case input_count is                           
+                        when "00"=>true_code_0<="1000";                
+                        when "01"=>true_code_1<="1000";                
+                        when "10"=>true_code_2<="1000";                
+                        when "11"=>true_code_3<="1000";                
+                        when others=>null;                              
+                        end case;                                       
+                                                                        
+            when "1001"=>digit_num<=disp_9;                             
+                                                                        
+                          case input_count is                           
+                        when "00"=>true_code_0<="1001";                
+                        when "01"=>true_code_1<="1001";                
+                        when "10"=>true_code_2<="1001";                
+                        when "11"=>true_code_3<="1001";                
+                        when others=>null;                              
+                        end case;                                       
+                                                                        
+            when others=>digit_num<=disp_void;                          
+    end case;                                                           
+    elsif(modify='0')then                                               
+        case input_count is                                             
+        when "00"=>                                                     
+            case input_code_0 is                                        
+            when "0000"=>digit_num<=disp_0;                             
+            when "0001"=>digit_num<=disp_1;                             
+            when "0010"=>digit_num<=disp_2;                             
+            when "0011"=>digit_num<=disp_3;                             
+            when "0100"=>digit_num<=disp_4;                             
+            when "0101"=>digit_num<=disp_5;                             
+            when "0110"=>digit_num<=disp_6;                             
+            when "0111"=>digit_num<=disp_7;                             
+            when "1000"=>digit_num<=disp_8;                             
+            when "1001"=>digit_num<=disp_9;                             
+            when others=>digit_num<=disp_void;                          
+            end case;                                                   
+        when "01"=>                                                     
+            case input_code_1 is                                        
+            when "0000"=>digit_num<=disp_0;                             
+            when "0001"=>digit_num<=disp_1;                             
+            when "0010"=>digit_num<=disp_2;                             
+            when "0011"=>digit_num<=disp_3;                             
+            when "0100"=>digit_num<=disp_4;                             
+            when "0101"=>digit_num<=disp_5;                             
+            when "0110"=>digit_num<=disp_6;                             
+            when "0111"=>digit_num<=disp_7;                             
+            when "1000"=>digit_num<=disp_8;                             
+            when "1001"=>digit_num<=disp_9;                             
+            when others=>digit_num<=disp_void;                          
+            end case;                                                   
+                                                                        
+        when "10"=>                                                     
+            case input_code_2 is                                        
+            when "0000"=>digit_num<=disp_0;                             
+            when "0001"=>digit_num<=disp_1;                             
+            when "0010"=>digit_num<=disp_2;                             
+            when "0011"=>digit_num<=disp_3;                             
+            when "0100"=>digit_num<=disp_4;                             
+            when "0101"=>digit_num<=disp_5;                             
+            when "0110"=>digit_num<=disp_6;                             
+            when "0111"=>digit_num<=disp_7;                             
+            when "1000"=>digit_num<=disp_8;                             
+            when "1001"=>digit_num<=disp_9;                             
+            when others=>digit_num<=disp_void;                          
+            end case;                                                   
+        when "11"=>                                                     
+        case input_code_3 is                                            
+            when "0000"=>digit_num<=disp_0;                             
+            when "0001"=>digit_num<=disp_1;                             
+            when "0010"=>digit_num<=disp_2;                             
+            when "0011"=>digit_num<=disp_3;                             
+            when "0100"=>digit_num<=disp_4;                             
+            when "0101"=>digit_num<=disp_5;                             
+            when "0110"=>digit_num<=disp_6;                             
+            when "0111"=>digit_num<=disp_7;                             
+            when "1000"=>digit_num<=disp_8;                             
+            when "1001"=>digit_num<=disp_9;                             
+            when others=>digit_num<=disp_void;                          
+            end case;                                                   
+        when others=>null;                                              
+    end case;                                                           
+    end if;                                                             
+end if;
+
+    
+       
+    if(state=unlock_state or(state=reset_state and ok_en='1'))then--为保证安全，输入正确后密码重置
         digit_num<=disp_void;
-        input_code_0<="0000";
-        input_code_1<="0000";
-        input_code_2<="0000";
-        input_code_3<="0000";
+        input_code_0<="1111";
+        input_code_1<="1111";
+        input_code_2<="1111";
+        input_code_3<="1111";
     end if;
 
     
@@ -392,7 +553,7 @@ end process;
 process(input_count,state)--切换显示位                                                      
 begin
 if(clk'event and clk='1')then
-if(state=input_state)then                                                                      
+if(state=input_state or state=reset_state)then                                                                      
     case input_count is                                                    
         when "00"=>digit_sel<="11110111";--与数码位置对应时，高对高，低对低                
         when "01"=>digit_sel<="11111011";                                  
@@ -400,17 +561,16 @@ if(state=input_state)then
         when "11"=>digit_sel<="11111110";                                  
         when others=>digit_sel<="11111111";                                
     end case;
-elsif(state=unlock_state)then--为保证安全，输入正确后将显示位全部灭掉
+elsif(state=unlock_state or(state=reset_state and ok_en='1'))then--为保证安全，输入正确以及重置密码完成后后将显示位全部灭掉
     digit_sel<="11111111";
 end if;
 end if;
-
 end process;
 
                                                                
-process(shift,delete)--通过左移右移改变显示及输入位数,只在waiting状态下生效                                                      
+process(shift,delete)--通过左移右移改变显示及输入位数                                                      
 begin
-if(state=input_state)then                                                                      
+if(state=input_state or state=reset_state)then                                                                      
     if(clk'event and clk='1')then                                          
         if(shift_en='1')then                                               
             case input_count is                                            
@@ -531,18 +691,6 @@ begin
     end case;
 end process;
 
---process(admin,clk)
---begin 
---if(clk'event and clk='1')then
---    if(state=warning_state)then
---        if(admin_en='1')then
---            counter<=0;
---            correct<='0';
---            wrong<='0';
---        end if;
---    end if;
---end if;
---end process;
 
 
 end Behavioral;
