@@ -472,7 +472,7 @@ begin
     elsif(modify='0')then                                               
         case input_count is                                             
         when "00"=>                                                     
-            case input_code_0 is                                        
+            case true_code_0 is                                        
             when "0000"=>digit_num<=disp_0;                             
             when "0001"=>digit_num<=disp_1;                             
             when "0010"=>digit_num<=disp_2;                             
@@ -486,7 +486,7 @@ begin
             when others=>digit_num<=disp_void;                          
             end case;                                                   
         when "01"=>                                                     
-            case input_code_1 is                                        
+            case true_code_1 is                                        
             when "0000"=>digit_num<=disp_0;                             
             when "0001"=>digit_num<=disp_1;                             
             when "0010"=>digit_num<=disp_2;                             
@@ -501,7 +501,7 @@ begin
             end case;                                                   
                                                                         
         when "10"=>                                                     
-            case input_code_2 is                                        
+            case true_code_2 is                                        
             when "0000"=>digit_num<=disp_0;                             
             when "0001"=>digit_num<=disp_1;                             
             when "0010"=>digit_num<=disp_2;                             
@@ -515,7 +515,7 @@ begin
             when others=>digit_num<=disp_void;                          
             end case;                                                   
         when "11"=>                                                     
-        case input_code_3 is                                            
+        case true_code_3 is                                            
             when "0000"=>digit_num<=disp_0;                             
             when "0001"=>digit_num<=disp_1;                             
             when "0010"=>digit_num<=disp_2;                             
