@@ -109,6 +109,21 @@ signal true_code_3: std_logic_vector(3 downto 0):="0000";
 
 signal input_count:std_logic_vector(1 downto 0):="00";  
 
+
+signal clk_20s:std_logic:='0';
+signal clk_10s:std_logic:='0';--短脉冲
+signal clk_125ms:std_logic:='0';
+signal clk_1ms:std_logic:='0';
+signal cnt_20s:integer:=0;
+signal cnt_10s:INTEGER:=0;
+signal cnt_125ms:INTEGER:=0;
+signal cnt_1ms:INTEGER:=0;
+
+signal rise_10s:std_logic:='0';
+signal riscnt_10s:integer:=0;
+signal rise_20s:std_logic:='0';
+signal riscnt_20s:integer:=0;
+
 begin
 process(clk)--状态机状态转换，整个系统的心脏
 begin
@@ -119,8 +134,10 @@ begin
                                 end if;
             when input_state=>if(counter>=3)then state<=warning_state;--缺个interval
                               elsif(counter<3 and wrong='0' and correct='1')then state<=unlock_state;--测试用wrong_en,correct_en
+                              elsif(rise_10s='1')then state<=waiting_state;
                               end if;
             when unlock_state=>if(ok_en='1' )then state<=waiting_state;--还有interval尚未加入
+                              elsif(rise_20s='1')then state<=waiting_state;
                                end if;
             when warning_state=>if(admin_en='1')then state<=waiting_state;
                                 end if;
@@ -673,6 +690,15 @@ if(state=unlock_state)then--进入正确状态后返回至等待状态，之前错误计数，错误正确
     end if;
 end if;
 
+
+
+if(state=waiting_state)then--
+        counter<=0;
+        correct<='0';
+        wrong<='0';
+end if;
+
+
 end if;
 end process;
 
@@ -690,6 +716,90 @@ begin
     when others=>counter_vec<="000";
     end case;
 end process;
+
+process(clk)--1ms分频器
+begin
+    if(clk'event and clk='1')then
+        if(cnt_1ms=50000)then
+            cnt_1ms<=0;
+            clk_1ms<=not clk_1ms;
+        else
+            cnt_1ms<=cnt_1ms+1;
+        end if;
+    end if;
+end process;
+
+process(clk)--125ms分频器
+begin
+    if(clk'event and clk='1')then
+        if(cnt_125ms=6250000)then
+            cnt_125ms<=0;
+            clk_125ms<=not clk_125ms;
+        else
+            cnt_125ms<=cnt_125ms+1;
+        end if;
+    end if;
+end process;
+
+process(clk_1ms)--10s脉冲分频器
+begin
+    if(clk_1ms'event and clk_1ms='1')then
+    if(cnt_10s=5000)then
+        cnt_10s<=0;
+        clk_10s<=not clk_10s;
+    else
+        cnt_10s<=cnt_10s+1;
+    end if;
+end if;
+end process;
+
+process(clk_1ms)--20s脉冲分频器
+begin
+    if(clk_1ms'event and clk_1ms='1')then
+    if(cnt_20s=10000)then
+        cnt_20s<=0;
+        clk_20s<=not clk_20s;
+    else
+        cnt_20s<=cnt_20s+1;
+    end if;
+    end if;
+end process;
+
+process(clk_1ms)
+begin
+if(clk_1ms'event and clk_1ms='1')then
+    if(state=input_state)then
+        if(riscnt_10s<=10000)then
+            riscnt_10s<=riscnt_10s+1;
+        else
+            rise_10s<='1';
+        end if;
+    end if;
+    if(state=waiting_state)then
+        riscnt_10s<=0;
+        rise_10s<='0';
+    end if;
+end if;
+end process;
+
+
+process(clk_1ms)
+begin
+if(clk_1ms'event and clk_1ms='1')then
+    if(state=unlock_state)then
+        if(riscnt_20s<=20000)then
+            riscnt_20s<=riscnt_20s+1;
+        else
+            rise_20s<='1';
+        end if;
+    end if;
+    if(state=waiting_state)then
+        riscnt_20s<=0;
+        rise_20s<='0';
+    end if;
+end if;
+end process;
+
 
 
 
