@@ -1,4 +1,4 @@
-# Digital-system-design短学期作业
+# Digital-system-designing短学期作业
 ## A coded lock密码锁
 
 - 功能描述：用于模仿密码锁的工作过程。完成密码锁的核心控制功能。
