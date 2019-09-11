@@ -132,11 +132,11 @@ begin
             when waiting_state=>if(reset_en='1')then state<=reset_state;
                                 elsif(ok_en='1')then state<=input_state;
                                 end if;
-            when input_state=>if(counter>=3)then state<=warning_state;--缺个interval
+            when input_state=>if(counter>=3)then state<=warning_state;
                               elsif(counter<3 and wrong='0' and correct='1')then state<=unlock_state;--测试用wrong_en,correct_en
                               elsif(rise_10s='1')then state<=waiting_state;
                               end if;
-            when unlock_state=>if(ok_en='1' )then state<=waiting_state;--还有interval尚未加入
+            when unlock_state=>if(ok_en='1' )then state<=waiting_state;
                               elsif(rise_20s='1')then state<=waiting_state;
                                end if;
             when warning_state=>if(admin_en='1')then state<=waiting_state;
@@ -765,7 +765,7 @@ begin
     end if;
 end process;
 
-process(clk_1ms)
+process(clk_1ms,shift_en,delete_en,input,modify)
 begin
 if(clk_1ms'event and clk_1ms='1')then
     if(state=input_state)then
@@ -779,6 +779,10 @@ if(clk_1ms'event and clk_1ms='1')then
         riscnt_10s<=0;
         rise_10s<='0';
     end if;
+end if;
+if(shift_en='1' or delete_en='1')then
+    riscnt_10s<=0;
+    rise_10s<='0';
 end if;
 end process;
 
