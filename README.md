@@ -39,4 +39,4 @@
 [vivado入门](https://www.bilibili.com/video/av49708529?from=search&seid=1973596137698186623)
 
 ## 友情链接
-[东南大学短学期数电设计之地铁售票系统]()
+[东南大学短学期数电设计之地铁售票系统](https://github.com/Sciroccogti/FPGA_Metro_Ticketing)
